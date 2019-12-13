@@ -59,36 +59,36 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // });
 
 
-// app.post('/data', function(req, res){
-// 	var data = req.body;
-// 	var mode = data["!nativeeditor_status"];
-// 	var sid = data.id;
-// 	var tid = sid;
+app.post('/data', function(req, res){
+	var data = req.body;
+	var mode = data["!nativeeditor_status"];
+	var sid = data.id;
+	var tid = sid;
 
-// 	delete data.id;
-// 	delete data.gr_id;
-// 	delete data["!nativeeditor_status"];
+	delete data.id;
+	delete data.gr_id;
+	delete data["!nativeeditor_status"];
 
 
-// 	function update_response(err, result){
-// 		if (err)
-// 			mode = "error";
-// 		else if (mode == "inserted")
-// 			tid = data._id;
+	function update_response(err, result){
+		if (err)
+			mode = "error";
+		else if (mode == "inserted")
+			tid = data._id;
 
-// 		res.setHeader("Content-Type","application/json");
-// 		res.send({action: mode, sid: sid, tid: tid});
-// 	}
+		res.setHeader("Content-Type","application/json");
+		res.send({action: mode, sid: sid, tid: tid});
+	}
 
-// 	if (mode == "updated")
-// 		db.event.updateById( sid, data, update_response);
-// 	else if (mode == "inserted")
-// 		db.event.insert(data, update_response);
-// 	else if (mode == "deleted")
-// 		db.event.removeById( sid, update_response);
-// 	else
-// 		res.send("Not supported operation");
-// });
+	if (mode == "updated")
+		db.event.updateById( sid, data, update_response);
+	else if (mode == "inserted")
+		db.event.insert(data, update_response);
+	else if (mode == "deleted")
+		db.event.removeById( sid, update_response);
+	else
+		res.send("Not supported operation");
+});
 
 app.use('/', router);
 
