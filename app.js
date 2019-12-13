@@ -1,44 +1,78 @@
-var express = require('express');
-var path = require('path');
-var bodyParser = require("body-parser");
+const express = require('express');
+const app = express();
+const path = require('path');
+const bodyParser = require("body-parser");
+// const mongodb = require('mongodb');
+const schedule = require('node-schedule');
 
-var db = require('mongoskin').db("mongodb://localhost/testdb", { w: 0});
-	db.bind('event');
+const mongoConnect = require('./db').mongoConnect;
 
-var app = express();
+// date when start the app
+let date = '* 6 * * 2';
+
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'js')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/init', function(req, res){
-	db.event.insert({ 
-		text:"My test event A", 
-		start_date: new Date(2018,8,1),
-		end_date:	new Date(2018,8,5)
-	});
-	db.event.insert({ 
-		text:"My test event B", 
-		start_date: new Date(2018,8,19),
-		end_date:	new Date(2018,8,24)
-	});
-	db.event.insert({ 
-		text:"Morning event", 
-		start_date: new Date(2018,8,4,4,0),
-		end_date:	new Date(2018,8,4,14,0)
-	});
-	db.event.insert({ 
-		text:"One more test event", 
-		start_date: new Date(2018,8,3),
-		end_date:	new Date(2018,8,8),
-		color: "#DD8616"
-	});
+schedule.scheduleJob('35 * * * 2', function(){
+	console.log('function called')
+		let date = [
+			'Sunday',
+			'Monday',
+			'Tuesday',
+			'Wednesday',
+			'Thursday',
+			'Friday',
+			'Saturday'
+		]
+		// if(date[new Date().getDay()] === 'Tuesday' ) {
+			const tasks = require('./js/calendar')();
+			let curr = new Date(); // get current date
+			let first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+			let last = first + 7; // last day is the first day + 6
+			tasks.forEach((task) => {
+				db.collection('events').insertOne({ 
+					text: `${Object.keys(task)} : ${Object.values(task)}`,
+					start_date: new Date(curr.setDate(last)).toUTCString(),
+					end_date:	new Date(curr.setDate(last)).toUTCString(),
+					color: "#DD8616"
+				});
+			})
+		// }
+  });
 
-	res.send("Test events were added to the database")
-});
-
+  app.get('/init', function(req, res, next){
+	console.log('function called')
+		let date = [
+			'Sunday',
+			'Monday',
+			'Tuesday',
+			'Wednesday',
+			'Thursday',
+			'Friday',
+			'Saturday'
+		]
+		// if(date[new Date().getDay()] === 'Tuesday' ) {
+			const tasks = require('./js/calendar')();
+			let curr = new Date(); // get current date
+			let first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+			let last = first + 7; // last day is the first day + 6
+			tasks.forEach((task) => {
+				db.collection('events').insertOne({ 
+					text: `${Object.keys(task)} : ${Object.values(task)}`,
+					start_date: new Date(curr.setDate(last)).toUTCString(),
+					end_date:	new Date(curr.setDate(last)).toUTCString(),
+					color: "#DD8616"
+				});
+			})
+		// }
+		res.send('updated');
+  });
+  
 
 app.get('/data', function(req, res){
-	db.event.find().toArray(function(err, data){
+	db.collection('events').find().toArray(function(err, data){
 		//set id property for all records
 		for (var i = 0; i < data.length; i++)
 			data[i].id = data[i]._id;
@@ -80,4 +114,7 @@ app.post('/data', function(req, res){
 		res.send("Not supported operation");
 });
 
-app.listen(3000);
+
+mongoConnect(() => {
+	app.listen(3000);
+})
