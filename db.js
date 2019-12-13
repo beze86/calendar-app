@@ -2,8 +2,8 @@ const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 
 
-const connectionString = "mongodb+srv://beze:administrator12345cluster0-abtcq.mongodb.net/calendar?retryWrites=true&w=majority";
-const url = "mongodb://localhost:27017/testdb";
+let connectionString = "mongodb+srv://beze:administrator12345cluster0-abtcq.mongodb.net/calendar?retryWrites=true&w=majority";
+let url = "mongodb://localhost:27017/testdb";
 
 let _db;
 
@@ -14,7 +14,7 @@ const mongoConnect = (callback) => {
         callback();
     })
     .catch((err) => {
-        console.log(err);
+        // console.log(err);
         throw err;
     })
 }
