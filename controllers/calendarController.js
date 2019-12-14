@@ -11,14 +11,18 @@ exports.showPage = (req, res, next) => {
 
 exports.getData = (req, res, next) => {
 	const db = getDb();
-	db.collection('events').find().toArray(function(err, data){
+	db.collection('events').find().toArray()
+	.then((data) => {
 		//set id property for all records
 		for (var i = 0; i < data.length; i++)
-			data[i].id = data[i]._id;
-		
+		data[i].id = data[i]._id;
+
 		//output response
 		res.send(data);
-	});
+	})
+	.catch((err) => {
+		throw err
+	})
 }
 
 exports.getNewTasksByClick = (req, res, next) => {
