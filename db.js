@@ -7,7 +7,7 @@ dotenv.config();
 let _db;
 
 const mongoConnect = (callback) => {
-    MongoClient.connect("mongodb+srv://beze:administrator12345@cluster0-abtcq.mongodb.net/calendar?retryWrites=true&w=majority", {useUnifiedTopology: true, useNewUrlParser: true})
+    MongoClient.connect(CONNECTIONSTRING, {useUnifiedTopology: true, useNewUrlParser: true})
     .then((client) => {
         _db = client.db();
         callback();
