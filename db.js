@@ -1,14 +1,13 @@
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
+const dotenv = require('dotenv');
+dotenv.config();
 
-
-let connectionString = "mongodb+srv://beze:administrator12345cluster0-abtcq.mongodb.net/calendar?retryWrites=true&w=majority";
-let url = "mongodb://localhost:27017/testdb";
 
 let _db;
 
 const mongoConnect = (callback) => {
-    MongoClient.connect(url, {useUnifiedTopology: true, useNewUrlParser: true})
+    MongoClient.connect(process.env.CONNECTIONSTRING, {useUnifiedTopology: true, useNewUrlParser: true})
     .then((client) => {
         _db = client.db();
         callback();
