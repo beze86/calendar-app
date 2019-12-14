@@ -44,5 +44,5 @@ mongoConnect(() => {
 	if (port == null || port == "") {
   		port = 8000;
 	}
-	app.listen(process.env.PORT);
+	app.listen(3000);
 })
