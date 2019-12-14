@@ -2,10 +2,13 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require("body-parser");
-// const mongodb = require('mongodb');
+const dotenv = require('dotenv');
+dotenv.config();
 const schedule = require('node-schedule');
 
 const mongoConnect = require('./db').mongoConnect;
+const Calendar = require('./model/Calendar');
+const tasks = require('./public/js/calendar');
 
 const router = require('./router');
 
@@ -13,46 +16,33 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 // date when start the app
-// let date = '* 6 * * 2';
+let date = '59 7 * * 1';
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-// schedule.scheduleJob('35 * * * 2', function(){
-// 	console.log('function called')
-// 		let date = [
-// 			'Sunday',
-// 			'Monday',
-// 			'Tuesday',
-// 			'Wednesday',
-// 			'Thursday',
-// 			'Friday',
-// 			'Saturday'
-// 		]
-// 		// if(date[new Date().getDay()] === 'Tuesday' ) {
-// 			const tasks = require('./js/calendar')();
-// 			let curr = new Date(); // get current date
-// 			let first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
-// 			let last = first + 7; // last day is the first day + 6
-// 			tasks.forEach((task) => {
-// 				db.collection('events').insertOne({ 
-// 					text: `${Object.keys(task)} : ${Object.values(task)}`,
-// 					start_date: new Date(curr.setDate(last)).toUTCString(),
-// 					end_date:	new Date(curr.setDate(last)).toUTCString(),
-// 					color: "#DD8616"
-// 				});
-// 			})
-// 		// }
-//   });
-
+// load all other pages
 app.use('/', router);
+
+// start node-schedule automatic task
+schedule.scheduleJob(date, () => {
+	console.log('task created')
+	let calendar = new Calendar(tasks());
+	calendar.newTask()	
+});
+
+// display error page
 app.use((req, res, next) => {
 	res.render('404');
 })
 
 
 mongoConnect(() => {
-	app.listen(3000);
+	let port = process.env.PORT;
+	if (port == null || port == "") {
+  		port = 8000;
+	}
+	app.listen(process.env.PORT);
 })

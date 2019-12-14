@@ -4,8 +4,6 @@ const tasks = require('../public/js/calendar');
 const Calendar = require('../model/Calendar');
 
 
-// set date for automatic node scheduler
-let date = '* 6 * * 2';
 
 exports.showPage = (req, res, next) => {
 		res.render('calendar');
