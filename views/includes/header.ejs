@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Weekly tasks</title>
+	<link rel="stylesheet" href="/css/calendar.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+	<style>
+		html, body{
+			margin:0px;
+			padding:0px;
+			height:100%;
+        }
+        .dhx_cal_data {
+            height:calc(100vh - 129px);
+        }
+		.dhx_cal_event_clear {
+			color:#fff;
+			font-weight: 500;
+			font-family: 'Roboto', sans-serif;
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			padding: 5px;
+		}
+		.calendar__tasks-hours {
+			color:white;
+			display:none;
+		}
+		.dhx_scale_holder > div.dhx_cal_event, .dhx_scale_holder > div.dhx_cal_event > .dhx_body {
+			left:0!important;
+			width:100%!important;
+		}
+		.dhx_scale_holder > div.dhx_cal_event .dhx_event_move.dhx_title {
+			display:none;
+		}
+		.dhx_scale_holder > div.dhx_cal_event:nth-child(1) {
+			top: 300px!important;
+		}
+		.dhx_scale_holder > div.dhx_cal_event:nth-child(2) {
+			top: 350px!important;
+		}
+		.dhx_scale_holder > div.dhx_cal_event:nth-child(3) {
+			top: 400px!important;
+		}
+		.dhx_scale_holder > div.dhx_cal_event:nth-child(4) {
+			top: 450px!important;
+		}
+		.dhx_scale_holder > div.dhx_cal_event:nth-child(5) {
+			top: 500px!important;
+        }
+        @media screen and (max-width: 600px) {
+            .dhx_cal_today_button{width:50px!important}
+        .dhx_cal_navline{height:100px!important}
+        .dhx_cal_date{margin-top:50px}
+        .dhx_cal_event_clear {
+            left:126px!important;
+            width: 255px!important;
+        }
+        .dhx_scale_bar:nth-child(1){
+            width: 19px!important;
+            left:0px!important;
+        }
+        .dhx_scale_bar:nth-child(2){
+            width: 19px!important;
+            left:21px!important;
+        }
+        .dhx_scale_bar:nth-child(3){
+            width: 19px!important;
+            left:42px!important;
+        }
+        .dhx_scale_bar:nth-child(4){
+            width: 19px!important;
+            left:63px!important;
+        }
+        .dhx_scale_bar:nth-child(5){
+            width: 19px!important;
+            left:84px!important;
+        }
+        .dhx_scale_bar:nth-child(6){
+            width: 19px!important;
+            left:105px!important;
+        }
+        .dhx_scale_bar:nth-child(7){
+            width: 254px!important;
+            left:126px!important;
+        }
+        td:nth-child(1), td:nth-child(1) .dhx_month_head, td:nth-child(1) .dhx_month_body{
+            width:20px!important;
+            padding-right:0px!important;
+            left: 0px!important;
+        }
+        td:nth-child(2), td:nth-child(2) .dhx_month_head, td:nth-child(2) .dhx_month_body{
+            width:20px!important;
+            padding-right:0px!important;
+            left: 20px!important;
+        }
+        td:nth-child(3), td:nth-child(3) .dhx_month_head, td:nth-child(3) .dhx_month_body{
+            width:20px!important;
+            padding-right:0px!important;
+            left: 40px!important;
+        }
+        td:nth-child(4), td:nth-child(4) .dhx_month_head, td:nth-child(4) .dhx_month_body{
+            width:20px!important;
+            padding-right:0px!important;
+            left: 60px!important;
+        }
+        td:nth-child(5), td:nth-child(5) .dhx_month_head, td:nth-child(5) .dhx_month_body{
+            width:20px!important;
+            padding-right:0px!important;
+            left: 80px!important;
+        }
+        td:nth-child(6), td:nth-child(6) .dhx_month_head, td:nth-child(6) .dhx_month_body{
+            width:20px!important;
+            padding-right:0px!important;
+            left: 100px!important;
+        }
+        td:nth-child(7), td:nth-child(7) .dhx_month_head, td:nth-child(7) .dhx_month_body{
+            width:255px!important;
+            padding-right:0px!important;
+            left: 120px!important;
+        }
+    }
+	</style>
+	<script>
+		function init() {
+			scheduler.config.xml_date="%Y-%m-%d %H:%i";
+			scheduler.init('scheduler_here',new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()),"month");
+
+			scheduler.templates.xml_date = function(value){ return new Date(value); };
+			scheduler.load("/data", "json");
+
+			var dp = new dataProcessor("/data");
+			dp.init(scheduler);
+			dp.setTransactionMode("POST", false);
+		}
+	</script>
+</head>
+<body>
+<nav>
+    <div class="container-fluid pt-3 pb-3" style="background-color:#1D79D4; color:#fff;">
+        <div class="row flex-column justify-content-center align-items-center" >
+                <h1>Weekly tasks</h1>
+                <h3>Don't be lazy, clean your shit!</h3>
+        </div>
+    </div>
+</nav>

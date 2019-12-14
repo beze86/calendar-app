@@ -7,12 +7,19 @@ let cleanHouse = () => {
         'common areas'
     ]
 
+    // let housemates = [
+    //     'Bez',
+    //     'Dani',
+    //     'Caro',
+    //     'Billy',
+    //     'Reinaldo'
+    // ]
     let housemates = [
-        'Bez',
-        'Dani',
-        'Caro',
-        'Billy',
-        'Reinaldo'
+        {name: 'Bez', color: '#ff4954'},
+        {name: 'Dani', color: '#3ecf8e'},
+        {name: 'Caro', color: '#FF69B4'},
+        {name: 'Billy', color: '#1D79D4'},
+        {name: 'Reinaldo', color: '#ffba86'}
     ]
 
         return cleaningTask(housemates, areas);
@@ -29,7 +36,7 @@ let cleaningTask = (mates, location) => {
     let tasks = [];
     mates.forEach((mate) => {
         let personsWithTasks = {};
-        personsWithTasks[mate] = randomLocation(location);
+        personsWithTasks[mate.name] = {task: randomLocation(location), color: mate.color};
         tasks.push(personsWithTasks);
     })
     return tasks;
