@@ -6,14 +6,6 @@ let cleanHouse = () => {
         'bins',
         'common areas'
     ]
-
-    // let housemates = [
-    //     'Bez',
-    //     'Dani',
-    //     'Caro',
-    //     'Billy',
-    //     'Reinaldo'
-    // ]
     let housemates = [
         {name: 'Bez', color: '#ff4954'},
         {name: 'Dani', color: '#3ecf8e'},
