@@ -7,7 +7,7 @@ dotenv.config();
 let _db;
 
 const mongoConnect = (callback) => {
-    MongoClient.connect(process.env.CONNECTIONSTRING, {useUnifiedTopology: true, useNewUrlParser: true})
+    MongoClient.connect(process.env.CONNECTIONSTRINGLOCAL, {useUnifiedTopology: true, useNewUrlParser: true})
     .then((client) => {
         _db = client.db();
         callback();

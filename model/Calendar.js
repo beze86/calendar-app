@@ -27,6 +27,11 @@ class Calendar {
 			})
         })
     }
+
+    static getJsonData() {
+        const db = getDb();
+        return db.collection('events').find().toArray()
+    }
 }
 
 

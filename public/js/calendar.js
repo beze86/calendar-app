@@ -18,7 +18,7 @@ let cleanHouse = () => {
         {name: 'Bez', color: '#ff4954'},
         {name: 'Dani', color: '#3ecf8e'},
         {name: 'Caro', color: '#FF69B4'},
-        {name: 'Billy', color: '#1D79D4'},
+        {name: 'Gabrielle', color: '#1D79D4'},
         {name: 'Reinaldo', color: '#ffba86'}
     ]
 

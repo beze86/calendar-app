@@ -10,8 +10,7 @@ exports.showPage = (req, res, next) => {
 }
 
 exports.getData = (req, res, next) => {
-	const db = getDb();
-	db.collection('events').find().toArray()
+	Calendar.getJsonData()
 	.then((data) => {
 		//set id property for all records
 		for (var i = 0; i < data.length; i++)
