@@ -4,10 +4,12 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 
-let _db;
+let url = process.env.CONNECTIONSTRINGLOCAL || process.env.CONNECTIONSTRINGREMOTE
+let obj = {useUnifiedTopology: true, useNewUrlParser: true}
 
+let _db;
 const mongoConnect = (callback) => {
-    MongoClient.connect(process.env.CONNECTIONSTRINGLOCAL, {useUnifiedTopology: true, useNewUrlParser: true})
+    MongoClient.connect(url, obj)
     .then((client) => {
         _db = client.db();
         callback();

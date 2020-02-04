@@ -1,5 +1,4 @@
 const tasks = require('../public/js/calendar');
-
 const Calendar = require('../model/Calendar');
 
 

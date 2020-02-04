@@ -14,7 +14,7 @@ let cleanHouse = () => {
         {name: 'Reinaldo', color: '#ffba86'}
     ]
 
-        return cleaningTask(housemates, areas);
+    return cleaningTask(housemates, areas);
 }
 
 let randomLocation = (location) => {
@@ -33,7 +33,6 @@ let cleaningTask = (mates, location) => {
     })
     return tasks;
 }
-
 
 
  module.exports = cleanHouse;   
