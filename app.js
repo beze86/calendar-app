@@ -4,7 +4,7 @@ const path = require('path');
 const bodyParser = require("body-parser");
 const dotenv = require('dotenv');
 dotenv.config();
-const schedule = require('node-schedule');
+const cron = require('node-cron');
 
 const mongoConnect = require('./db').mongoConnect;
 const Calendar = require('./model/Calendar');
@@ -16,7 +16,7 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 // date when start the app
-let date = '59 7 * * 1';
+let date = '00 7 * * Monday';
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
@@ -27,10 +27,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', router);
 
 // start node-schedule automatic task
-schedule.scheduleJob(date, () => {
+cron.schedule(date, () => {
 	console.log('task created')
 	let calendar = new Calendar(tasks());
-	calendar.newTask()	
+	calendar.newTask()
 });
 
 // display error page
