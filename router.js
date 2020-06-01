@@ -8,5 +8,4 @@ router.get('/data',calendarController.getData);
 router.get('/init', calendarController.getNewTasksByClick);
 
 
-
 module.exports = router;

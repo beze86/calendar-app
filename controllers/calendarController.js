@@ -1,5 +1,5 @@
-const tasks = require('../public/js/calendar');
-const Calendar = require('../model/Calendar');
+const CleanHouseTasks = require('../public/js/CleanHouseTasks');
+const CalendarModel = require('../model/CalendarModel');
 
 
 
@@ -8,14 +8,9 @@ exports.showPage = (req, res, next) => {
 }
 
 exports.getData = (req, res, next) => {
-	Calendar.getJsonData()
+	CalendarModel.getJsonData()
 	.then((data) => {
-		//set id property for all records
-		for (var i = 0; i < data.length; i++)
-		data[i].id = data[i]._id;
-
-		//output response
-		res.send(data);
+		res.json(data);
 	})
 	.catch((err) => {
 		throw err
@@ -23,13 +18,12 @@ exports.getData = (req, res, next) => {
 }
 
 exports.getNewTasksByClick = (req, res, next) => {
-	let calendar = new Calendar(tasks());
+	let calendar = new CalendarModel(new CleanHouseTasks().cleaningTask());
 	calendar.newTask()
-	.then((respone) => {
+	.then((response) => {
 		res.redirect('/');
 	})
 	.catch((err) => {
 		console.log(err)
 	})
-	
 }
